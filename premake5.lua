@@ -31,9 +31,8 @@ project "glfw"
 	}
 
 	filter "system:windows"
-		staticruntime "On"
+		staticruntime "off"
 		systemversion "latest"
-		-- buildoptions { "-std=c11", "-lgdi32" }
 
 		files
 		{
@@ -57,12 +56,14 @@ project "glfw"
 			"_CRT_SECURE_NO_WARNINGS"
 		}
 
-	filter "configurations:Debug"
-		-- buildoptions "/MTd"
+	filter { "configurations:Debug", "system:windows" }
 		runtime "Debug"
-		symbols "on"
+		symbols "On"
 
-	filter "configurations:Release"
-		-- buildoptions "/MT"
+	filter { "configurations:Release", "system:windows" }
 		runtime "Release"
-		optimize "on"
+		optimize "On"
+
+	filter { "configurations:Dist", "system:windows" }
+		runtime "Release"
+		optimize "On"
